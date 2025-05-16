@@ -6,6 +6,10 @@
 # private:
 # };
 BasedOnStyle: Google
+Language:     Cpp
+
+AlignTrailingComments: true     # 单行注释对齐
+SpacesBeforeTrailingComments: 2 # 单行注释前添加两个空格
 AlignAfterOpenBracket: BlockIndent
-IndentWidth: 4  # 缩进为4个字符
-AccessModifierOffset: -4  # private,public等向前四格
+IndentWidth: 4                  # 缩进为4个字符
+AccessModifierOffset: -4        # private,public等向前四格
