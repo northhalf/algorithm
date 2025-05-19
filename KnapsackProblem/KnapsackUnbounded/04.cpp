@@ -8,24 +8,25 @@ int main() {
     std::cin >> n >> h;
     std::vector<std::pair<int, int>> item;  // 记录干草包的价格和质量
     item.reserve(n);
+    int max_weight = 0;  // 记录最大质量
     // 获取每个公司的干草包质量和价格
     for (int i = 0; i < n; i++) {
         int weight, cost;
         std::cin >> weight >> cost;
+        max_weight = std::max(max_weight, weight);
         item.emplace_back(cost, weight);
     }
-    // dp数组，并确定容量最大值: 以第一个物品为基准，假设全部购买第一个物品
-    // 看需要花费多少钱
-    int capablity = (h / item[0].second + 1) * item[0].first;
-    std::vector<int> dp(capablity);
-    // 完全背包二重循环
+    // dp数组，因为所有的价格都不大于5000,所以可设10000为无穷大
+    std::vector<int> dp(h + max_weight + 1, 0x77777777);
+    dp[0] = 0;  // 价格为0对应的最小质量为0
+    // 完全背包的二重循环
     for (int i = 0; i < n; i++) {
-        for (int j = item[i].first; j <= capablity; j++) {
-            dp[j] = std::max(dp[j - item[i].first] + item[i].second, dp[j]);
+        for (int j = item[i].second; j <= (h + max_weight); j++) {
+            dp[j] = std::min(dp[j - item[i].second] + item[i].first, dp[j]);
         }
     }
-    // 查询最少开销
-    auto res = std::lower_bound(dp.begin(), dp.end(), h);
-    std::cout << std::distance(dp.begin(), res) << std::endl;
+    // 获取最小元素
+    auto min_ele = std::min_element(dp.begin() + h, dp.end());
+    std::cout << (*min_ele) << std::endl;
     return 0;
 }
