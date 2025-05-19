@@ -1,3 +1,12 @@
 # 个人算法笔记仓库
 
 用作个人记录算法做题时候的思路和想法以及代码。目前正在学习**动态规划**中的背包问题(Knapsack Problem)。
+
+仓库目录：
+
+```plain
+.
+├── KnapsackProblem(背包问题)
+│   ├── Knapsack01(0-1背包)
+│   └── KnapsackUnbounded(完全背包)
+```
