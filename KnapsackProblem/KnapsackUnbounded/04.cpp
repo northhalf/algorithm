@@ -1,3 +1,4 @@
+/* UTF-8 */
 #include <algorithm>
 #include <iostream>
 #include <utility>

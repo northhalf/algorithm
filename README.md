@@ -7,6 +7,7 @@
 ```plain
 .
 ├── KnapsackProblem(背包问题)
-│   ├── Knapsack01(0-1背包)
+│   ├── Knapsack01(01背包)
+│   ├── KnapsackBounded(多重背包)
 │   └── KnapsackUnbounded(完全背包)
 ```
