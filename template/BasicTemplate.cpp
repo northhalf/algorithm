@@ -7,6 +7,17 @@
 #include <limits>
 #include <utility>
 #include <vector>
+using ll = long long;
+template <std::integral T>
+T QuickRead();
+template <std::integral T>
+void QuickWrite(T num);
+
+int main() {
+    std::function qr = QuickRead<ll>;
+    return 0;
+}
+
 /**
  * @brief 快速读取输入的整数
  * @return 读取到的数字
@@ -71,55 +82,4 @@ void QuickWrite(T num) {
     }
     // 换行并刷新缓冲区
     std::putchar('\n');
-}
-int main() {
-    std::function qr = QuickRead<long long>;  // 快速读取long long类型
-
-    long long n = qr(), m = qr(), C = qr();  // 普通物品数，奇货数，背包总容量
-    std::vector<std::pair<long, long>> items{{0, 0}};  // 记录物品
-    items.reserve(n * 1000);
-    for (long long i = 0; i < n; i++) {
-        long long weight = qr(), value = qr(),
-                  num = qr();  // 物品的价值和重量，数目
-        // 二进制拆分
-        for (long long j = 1; j <= num; num -= j, j <<= 1) {
-            items.emplace_back(weight * j, value * j);
-        }
-        if (num != 0) {
-            items.emplace_back(weight * num, value * num);
-        }
-    }
-    std::vector<long long> dp(C + 1);
-    // 01背包
-    for (size_t i = 1; i < items.size(); i++) {
-        for (long long j = C; j >= items[i].first; j--) {
-            dp[j] = std::max(dp[j - items[i].first] + items[i].second, dp[j]);
-        }
-    }
-    std::vector<long long> value(C + 1);
-    // 处理奇货
-    for (long long i = 0; i < m; i++) {
-        long long a = qr(), b = qr(), c = qr();
-        // 计算对应容量的价值
-        for (long long k = 0; k <= C; k++) {
-            value[k] = (a * k + b) * k + c;
-        }
-        // 完全背包
-        // 枚举背包容量
-        for (long long j = C; j >= 0; j--) {
-            // 枚举给予容量
-            for (long long k = 0; k <= j; k++) {
-                // 如果价值不大于0则跳过
-                if (value[k] <= 0) {
-                    continue;
-                }
-                if (long long total_value = dp[j - k] + value[k];
-                    total_value > dp[j]) {
-                    dp[j] = total_value;
-                }
-            }
-        }
-    }
-    QuickWrite(dp[C]);
-    return 0;
 }

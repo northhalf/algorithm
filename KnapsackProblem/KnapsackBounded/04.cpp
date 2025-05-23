@@ -1,3 +1,4 @@
+/* UTF-8 */
 #include <bitset>
 #include <iostream>
 #include <limits>
