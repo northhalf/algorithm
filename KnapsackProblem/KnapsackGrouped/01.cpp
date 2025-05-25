@@ -5,12 +5,8 @@
 #include <functional>
 #include <iostream>
 #include <limits>
-#include <map>
 #include <queue>
-#include <set>
 #include <stack>
-#include <unordered_map>
-#include <unordered_set>
 #include <utility>
 #include <vector>
 using ll = long long;
@@ -21,6 +17,37 @@ void QuickWrite(T num);
 
 int main() {
     std::function qr = QuickRead<ll>;
+    // 物品的总重量和数目
+    ll total_weight = qr(), num_items = qr();
+    // 记录每组的物品
+    std::vector<std::vector<std::pair<ll, ll>>> items_each_group(101);
+    for (int i = 0; i < num_items; i++) {
+        // 物品的重量，利用价值，所属祖师
+        ll weight = qr(), value = qr(), group = qr();
+        items_each_group[group].emplace_back(weight, value);
+    }
+    std::vector<ll> dp(total_weight + 1);
+    // 对组的01背包
+    // 枚举组数
+    for (ll i = 1; i <= 100; i++) {
+        // 枚举重量
+        for (ll j = total_weight; j >= 1; j--) {
+            // 枚举当前组内物品
+            for (size_t k = 0; k < items_each_group[i].size(); k++) {
+                // 如果当前物品质量大于枚举容量则跳过
+                if (items_each_group[i][k].first > j) {
+                    continue;
+                }
+
+                dp[j] = std::max(
+                    dp[j - items_each_group[i][k].first] +
+                        items_each_group[i][k].second,
+                    dp[j]
+                );
+            }
+        }
+    }
+    QuickWrite(dp[total_weight]);
     return 0;
 }
 

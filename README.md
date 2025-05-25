@@ -9,6 +9,8 @@
 ├── KnapsackProblem(背包问题)
 │   ├── Knapsack01(01背包)
 │   ├── KnapsackBounded(多重背包)
+│   ├── KnapsackGrouped(分组背包)
+│   ├── KnapsackMixed(混合背包)
 │   ├── Knapsack-MultiDimensional(多维背包)
 │   └── KnapsackUnbounded(完全背包)
 └── template(基本算法模板，如快速读写)

@@ -21,6 +21,49 @@ void QuickWrite(T num);
 
 int main() {
     std::function qr = QuickRead<ll>;
+    // 玩家人物，城堡数，士兵数
+    ll num_people = qr(), num_castle = qr(), num_soldier = qr();
+    // 记录每个城堡，每个玩家投入多少士兵
+    std::vector<std::vector<ll>> soldier_each_castle(
+        num_castle + 1, std::vector<ll>(num_people + 1)
+    );
+    // 记录玩家兵力信息
+    // 枚举玩家
+    for (ll i = 1; i <= num_people; i++) {
+        // 枚举城堡
+        for (ll j = 1; j <= num_castle; j++) {
+            soldier_each_castle[j][i] = qr();
+        }
+    }
+    // 将每座城堡，玩家投入的兵力进行排序
+    // 并将兵力改为攻占所需兵力
+    for (ll i = 1; i <= num_castle; i++) {
+        std::sort(
+            soldier_each_castle[i].begin() + 1,
+            soldier_each_castle[i].begin() + num_people + 1
+        );
+        for (ll j = 1; j <= num_people; j++) {
+            soldier_each_castle[i][j] = 2 * soldier_each_castle[i][j] + 1;
+        }
+    }
+    std::vector<ll> dp(num_soldier + 1);
+    // 分组背包
+    // 枚举城堡
+    for (ll i = 1; i <= num_castle; i++) {
+        // 枚举士兵使用数
+        for (ll j = num_soldier; j > 0; j--) {
+            // 枚举攻下哪个人的这座城堡
+            for (ll k = 1; k <= num_people; k++) {
+                // 如果需要士兵数比使用士兵数多，则结束枚举
+                if (soldier_each_castle[i][k] > j) {
+                    break;
+                }
+                dp[j] =
+                    std::max(dp[j - soldier_each_castle[i][k]] + k * i, dp[j]);
+            }
+        }
+    }
+    QuickWrite(dp[num_soldier]);
     return 0;
 }
 
