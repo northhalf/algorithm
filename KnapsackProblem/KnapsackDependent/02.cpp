@@ -3,6 +3,7 @@
 #include <cctype>
 #include <chrono>
 #include <concepts>
+#include <deque>
 #include <functional>
 #include <iostream>
 #include <limits>
