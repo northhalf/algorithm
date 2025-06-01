@@ -2,6 +2,8 @@
 .vscode/
 # 可执行文件生成目录
 output/
+# IDEA
+.idea/
 # Prerequisites
 *.d
 
